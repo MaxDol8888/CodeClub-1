@@ -34,12 +34,9 @@ print "result %s returned after %s seconds (1 million iterations)." % (fibsum, e
 
 # Determine sum of even Fibonacci secquence values below max value n using while loop
 def fib_sum_using_while(n):
-
 	prev, cur, total = 0, 1, 0
-
 	while cur < n:
 		if cur % 2 == 0: total += cur
-
 		prev, cur = cur, cur + prev
 
 	return total
@@ -49,6 +46,50 @@ print fib_sum_using_while(4000000)
 '''
 start = time.time()
 for i in xrange(1000000): fibsum = fib_sum_using_while(4000000)
+elapsed = (time.time() - start)
+print "result %s returned after %s seconds (1 million iterations)." % (fibsum, elapsed)
+'''
+
+
+# Generate even Fibonacci secquence values below max value n using
+# generator and then sum them up.  Note, this runs as fast as when you
+# use sum and instead keep a running total
+def fib_even_using_generator(n):
+    prev, cur = 0, 1
+    while cur < n:
+        if cur % 2 == 0: yield cur
+        prev, cur = cur, cur + prev
+
+print sum(fib_even_using_generator(4000000))
+
+'''
+start = time.time()
+for i in xrange(1000000): fibsum = sum(fib_even_using_generator(4000000))
+elapsed = (time.time() - start)
+print "result %s returned after %s seconds (1 million iterations)." % (fibsum, elapsed)
+'''
+
+
+# Generate even Fibonacci secquence values using generator with no
+# upper bound.
+#
+# Itertools contains a function called takewhile(predicate, iterable), which
+# you can wrap around a generator.
+#
+# Note, this runs than other solutions that do not use takewhile
+def fib_even_infinate_using_generator():
+    prev, cur = 0, 1
+    while True:
+    	if cur % 2 == 0: yield cur
+        prev, cur = cur, cur + prev
+
+from itertools import takewhile
+
+print sum(i for i in takewhile(lambda x: x<4000000, fib_even_infinate_using_generator()))
+
+'''
+start = time.time()
+for i in xrange(1000000): fibsum = sum(i for i in takewhile(lambda x: x<4000000, fib_even_infinate_using_generator()))
 elapsed = (time.time() - start)
 print "result %s returned after %s seconds (1 million iterations)." % (fibsum, elapsed)
 '''
