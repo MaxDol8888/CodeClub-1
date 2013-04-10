@@ -18,8 +18,7 @@ def fib_sum(prev, cur, total, n):
 	if cur > n:
 		return total
 
-	if cur % 2 == 0:
-		total = total + cur
+	if cur % 2 == 0: total += cur
 
 	return fib_sum(cur, cur + prev, total, n)
 
@@ -39,8 +38,7 @@ def fib_sum_using_while(n):
 	prev, cur, total = 0, 1, 0
 
 	while cur < n:
-		if cur % 2 == 0:
-			total = total + cur
+		if cur % 2 == 0: total += cur
 
 		prev, cur = cur, cur + prev
 
