@@ -43,6 +43,8 @@ def get_largest_3_digit_palindrome_optimized():
 	for i in xrange(999, 99, -1):
 		for j in xrange(i, 99, -1):
 			product = i * j
+
+			# Optimization: Since we're decreasing, nothing else in the row can be bigger
 			if (product < palindrome): break
 
 			if is_palindrome(product):
